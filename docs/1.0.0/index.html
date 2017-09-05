@@ -507,15 +507,19 @@
         <li><code class="code"><span class="keyword">import</span> std.stdio : stdout;
 <span class="keyword">import</span> <span class="psymbol">ipinfo</span> : getIpinfo, IpinfoData;
 
-getIpinfo(<span class="keyword">delegate</span>(IpinfoData data) {
-	stdout.writefln(<span class="string_literal">"ip: %s"</span>, data.ip);
-	stdout.writefln(<span class="string_literal">"latitude: %s"</span>, data.latitude);
-	stdout.writefln(<span class="string_literal">"longitude: %s"</span>, data.longitude);
-	stdout.writefln(<span class="string_literal">"org: %s"</span>, data.org);
-	stdout.writefln(<span class="string_literal">"city: %s"</span>, data.city);
-	stdout.writefln(<span class="string_literal">"region: %s"</span>, data.region);
-	stdout.writefln(<span class="string_literal">"country: %s"</span>, data.country);
-	stdout.writefln(<span class="string_literal">"postal: %s"</span>, data.postal);
+getIpinfo(<span class="keyword">delegate</span>(IpinfoData data, Exception err) {
+	<span class="keyword">if</span> (err) {
+		stderr.writefln(<span class="string_literal">"%s"</span>, err);
+	} <span class="keyword">else</span> {
+		stdout.writefln(<span class="string_literal">"ip: %s"</span>, data.ip);
+		stdout.writefln(<span class="string_literal">"latitude: %s"</span>, data.latitude);
+		stdout.writefln(<span class="string_literal">"longitude: %s"</span>, data.longitude);
+		stdout.writefln(<span class="string_literal">"org: %s"</span>, data.org);
+		stdout.writefln(<span class="string_literal">"city: %s"</span>, data.city);
+		stdout.writefln(<span class="string_literal">"region: %s"</span>, data.region);
+		stdout.writefln(<span class="string_literal">"country: %s"</span>, data.country);
+		stdout.writefln(<span class="string_literal">"postal: %s"</span>, data.postal);
+	}
 });
 </code></li>
       </ol>
@@ -595,7 +599,7 @@ getIpinfo(<span class="keyword">delegate</span>(IpinfoData data) {
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="getIpinfo"></span>void <code class="code">getIpinfo</code>(void delegate(IpinfoData data) <code class="code">cb</code>);
+            <span class="ddoc_anchor" id="getIpinfo"></span>void <code class="code">getIpinfo</code>(void delegate(IpinfoData data, Exception err) <code class="code">cb</code>);
 
           </code>
         </p>
@@ -618,7 +622,7 @@ getIpinfo(<span class="keyword">delegate</span>(IpinfoData data) {
       <tr class="ddoc_param_row">
   <td scope="ddoc_param_id">
   <code class="code">
-    <em class="term">void delegate(IpinfoData data) <code class="code">cb</code></em>
+    <em class="term">void delegate(IpinfoData data, Exception err) <code class="code">cb</code></em>
   </code>
 </td>
 <td>
@@ -632,6 +636,12 @@ getIpinfo(<span class="keyword">delegate</span>(IpinfoData data) {
 
     </tbody>
   </table>
+</div>
+<div class="ddoc_throws">
+  <h4>Throws</h4>
+  <p class="para">
+    If it fails to download or parse the JSON response.
+  </p>
 </div>
 
 </section>

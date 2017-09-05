@@ -19,15 +19,19 @@ Examples:
 import std.stdio : stdout;
 import ipinfo : getIpinfo, IpinfoData;
 
-getIpinfo(delegate(IpinfoData data) {
-	stdout.writefln("ip: %s", data.ip);
-	stdout.writefln("latitude: %s", data.latitude);
-	stdout.writefln("longitude: %s", data.longitude);
-	stdout.writefln("org: %s", data.org);
-	stdout.writefln("city: %s", data.city);
-	stdout.writefln("region: %s", data.region);
-	stdout.writefln("country: %s", data.country);
-	stdout.writefln("postal: %s", data.postal);
+getIpinfo(delegate(IpinfoData data, Exception err) {
+	if (err) {
+		stderr.writefln("%s", err);
+	} else {
+		stdout.writefln("ip: %s", data.ip);
+		stdout.writefln("latitude: %s", data.latitude);
+		stdout.writefln("longitude: %s", data.longitude);
+		stdout.writefln("org: %s", data.org);
+		stdout.writefln("city: %s", data.city);
+		stdout.writefln("region: %s", data.region);
+		stdout.writefln("country: %s", data.country);
+		stdout.writefln("postal: %s", data.postal);
+	}
 });
 ----
 +/
@@ -75,8 +79,8 @@ static this() {
 		try {
 			content = cast(string) get(url, http);
 		} catch (CurlException ex) {
-			stderr.writefln("!!! url: %s", url);
-			stderr.writefln("!!! CurlException: %s", ex.msg);
+			//stderr.writefln("!!! url: %s", url);
+			//stderr.writefln("!!! CurlException: %s", ex.msg);
 			//stderr.writefln("!!!!!!!!!!!!!!!! CurlException: %s", ex);
 		}
 
@@ -92,22 +96,28 @@ Returns the ipinfo info using a callback.
 
 Params:
  cb = The callback to fire when the ipinfo info has been downloaded.
+
+Throws:
+	If it fails to download or parse the JSON response.
 +/
-void getIpinfo(void delegate(IpinfoData data) cb) {
+void getIpinfo(void delegate(IpinfoData data, Exception err) cb) {
 	import std.stdio : stdout, stderr;
 	import std.json : JSONValue, parseJSON;
-	import std.string : chomp;
+	import std.string : chomp, format;
 	import std.array : split;
 	import std.conv : to;
 
+	IpinfoData data;
+	immutable string URL = "https://ipinfo.io/json";
+
 	// Get ipinfo for this ip address
-	httpGet("https://ipinfo.io/json", delegate(int status, string response) {
+	httpGet(URL, delegate(int status, string response) {
 		if (status != 200) {
-			stderr.writefln("Request for ipinfo data failed with status code: %s", status);
+			auto err = new Exception("Request for \"%s\" failed with status code: %s".format(URL, status));
+			cb(data, err);
 			return;
 		}
 
-		IpinfoData data;
 		try {
 			JSONValue j = parseJSON(response);
 
@@ -122,11 +132,12 @@ void getIpinfo(void delegate(IpinfoData data) cb) {
 			data.country = j["country"].str();
 			data.postal = j["postal"].str();
 		} catch (Throwable) {
-			stderr.writefln("Failed to parse ipinfo JSON response: %s", response);
+			auto err = new Exception("Failed to parse \"%s\" JSON response".format(URL));
+			cb(data, err);
 			return;
 		}
 
-		cb(data);
+		cb(data, null);
 	});
 }
 
@@ -155,7 +166,9 @@ unittest {
 
 	describe("ipinfo",
 		it("Should get ipinfo", delegate() {
-			ipinfo.getIpinfo(delegate(IpinfoData data) {
+			ipinfo.getIpinfo(delegate(IpinfoData data, Exception err) {
+				err.shouldBeNull();
+
 				data.ip.shouldEqual("8.8.8.8");
 				data.latitude.shouldEqual("37.385999999999996");
 				data.longitude.shouldEqual("-122.0838");
