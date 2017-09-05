@@ -505,18 +505,17 @@
     <div class="dlang">
       <ol class="code_lines">
         <li><code class="code"><span class="keyword">import</span> std.stdio : stdout;
-<span class="keyword">import</span> <span class="psymbol">ipinfo</span> : getIpinfo;
+<span class="keyword">import</span> <span class="psymbol">ipinfo</span> : getIpinfo, IpinfoData;
 
 getIpinfo(<span class="keyword">delegate</span>(IpinfoData data) {
 	stdout.writefln(<span class="string_literal">"ip: %s"</span>, data.ip);
-	stdout.writefln(<span class="string_literal">"hostname: %s"</span>, data.hostname);
 	stdout.writefln(<span class="string_literal">"latitude: %s"</span>, data.latitude);
 	stdout.writefln(<span class="string_literal">"longitude: %s"</span>, data.longitude);
 	stdout.writefln(<span class="string_literal">"org: %s"</span>, data.org);
 	stdout.writefln(<span class="string_literal">"city: %s"</span>, data.city);
 	stdout.writefln(<span class="string_literal">"region: %s"</span>, data.region);
 	stdout.writefln(<span class="string_literal">"country: %s"</span>, data.country);
-	stdout.writefln(<span class="string_literal">"phone: %s"</span>, data.phone);
+	stdout.writefln(<span class="string_literal">"postal: %s"</span>, data.postal);
 });
 </code></li>
       </ol>
@@ -563,14 +562,13 @@ getIpinfo(<span class="keyword">delegate</span>(IpinfoData data) {
       <ol class="code_lines">
         <li><code class="code"><span class="keyword">struct</span> <span class="psymbol">IpinfoData</span> {
 	string ip;
-	string hostname;
 	string latitude;
 	string longitude;
 	string org;
 	string city;
 	string region;
 	string country;
-	string phone;
+	string postal;
 }
 </code></li>
       </ol>

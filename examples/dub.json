@@ -1,0 +1,6 @@
+{
+	"name": "example",
+	"targetType": "executable",
+	"sourceFiles": ["../source/ipinfo.d"],
+	"mainSourceFile": "example.d",
+}

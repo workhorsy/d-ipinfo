@@ -17,18 +17,17 @@ Boost Software License - Version 1.0
 Examples:
 ----
 import std.stdio : stdout;
-import ipinfo : getIpinfo;
+import ipinfo : getIpinfo, IpinfoData;
 
 getIpinfo(delegate(IpinfoData data) {
 	stdout.writefln("ip: %s", data.ip);
-	stdout.writefln("hostname: %s", data.hostname);
 	stdout.writefln("latitude: %s", data.latitude);
 	stdout.writefln("longitude: %s", data.longitude);
 	stdout.writefln("org: %s", data.org);
 	stdout.writefln("city: %s", data.city);
 	stdout.writefln("region: %s", data.region);
 	stdout.writefln("country: %s", data.country);
-	stdout.writefln("phone: %s", data.phone);
+	stdout.writefln("postal: %s", data.postal);
 });
 ----
 +/
@@ -40,28 +39,26 @@ Data gathered in IpinfoData:
 ----
 struct IpinfoData {
 	string ip;
-	string hostname;
 	string latitude;
 	string longitude;
 	string org;
 	string city;
 	string region;
 	string country;
-	string phone;
+	string postal;
 }
 ----
 +/
 
 struct IpinfoData {
 	string ip;
-	string hostname;
 	string latitude;
 	string longitude;
 	string org;
 	string city;
 	string region;
 	string country;
-	string phone;
+	string postal;
 }
 
 void delegate(string url, void delegate(int status, string response) cb) httpGet;
@@ -117,14 +114,13 @@ void getIpinfo(void delegate(IpinfoData data) cb) {
 			string[] loc = split(j["loc"].str(), ",");
 
 			data.ip = j["ip"].str();
-			data.hostname = j["hostname"].str();
 			data.latitude = chomp(loc[0]);
 			data.longitude = chomp(loc[1]);
 			data.org = j["org"].str();
 			data.city = j["city"].str();
 			data.region = j["region"].str();
 			data.country = j["country"].str();
-			data.phone = j["phone"].integer().to!string;
+			data.postal = j["postal"].str();
 		} catch (Throwable) {
 			stderr.writefln("Failed to parse ipinfo JSON response: %s", response);
 			return;
@@ -140,13 +136,12 @@ unittest {
 	immutable string RESULT = `
 	{
 	  "ip": "8.8.8.8",
-	  "hostname": "google-public-dns-a.google.com",
 	  "loc": "37.385999999999996,-122.0838",
 	  "org": "AS15169 Google Inc.",
 	  "city": "Mountain View",
 	  "region": "California",
 	  "country": "US",
-	  "phone": 650
+	  "postal": "94043"
 	}
 	`;
 
@@ -162,14 +157,13 @@ unittest {
 		it("Should get ipinfo", delegate() {
 			ipinfo.getIpinfo(delegate(IpinfoData data) {
 				data.ip.shouldEqual("8.8.8.8");
-				data.hostname.shouldEqual("google-public-dns-a.google.com");
 				data.latitude.shouldEqual("37.385999999999996");
 				data.longitude.shouldEqual("-122.0838");
 				data.org.shouldEqual("AS15169 Google Inc.");
 				data.city.shouldEqual("Mountain View");
 				data.region.shouldEqual("California");
 				data.country.shouldEqual("US");
-				data.phone.shouldEqual("650");
+				data.postal.shouldEqual("94043");
 			});
 		}),
 	);
