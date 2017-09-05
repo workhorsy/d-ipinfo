@@ -70,7 +70,6 @@ private void delegate(string url, void delegate(int status, string response) cb)
 
 static this() {
 	httpGetDefault = delegate(string url, void delegate(int status, string response) cb) {
-		import std.stdio : stdout, stderr;
 		import std.net.curl : HTTP, CurlException, get;
 
 		auto http = HTTP();
@@ -79,9 +78,6 @@ static this() {
 		try {
 			content = cast(string) get(url, http);
 		} catch (CurlException ex) {
-			//stderr.writefln("!!! url: %s", url);
-			//stderr.writefln("!!! CurlException: %s", ex.msg);
-			//stderr.writefln("!!!!!!!!!!!!!!!! CurlException: %s", ex);
 		}
 
 		ushort status = http.statusLine().code;
@@ -101,11 +97,9 @@ Throws:
 	If it fails to download or parse the JSON response.
 +/
 void getIpinfo(void delegate(IpinfoData data, Exception err) cb) {
-	import std.stdio : stdout, stderr;
 	import std.json : JSONValue, parseJSON;
 	import std.string : chomp, format;
 	import std.array : split;
-	import std.conv : to;
 
 	IpinfoData data;
 	immutable string URL = "https://ipinfo.io/json";
