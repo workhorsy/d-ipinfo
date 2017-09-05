@@ -16,7 +16,7 @@ Boost Software License - Version 1.0
 
 Examples:
 ----
-import std.stdio : stdout;
+import std.stdio : stdout, stderr;
 import ipinfo : getIpinfo, IpinfoData;
 
 getIpinfo(delegate(IpinfoData data, Exception err) {
