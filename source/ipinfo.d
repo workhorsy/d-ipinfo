@@ -4,8 +4,7 @@
 // https://github.com/workhorsy/d-ipinfo
 
 /++
-Get http://ipinfo.io info with the D programming language. It first gets your longitude
-and latitude using http://ipinfo.io.
+Get http://ipinfo.io with the D programming language.
 
 Home page:
 $(LINK https://github.com/workhorsy/d-ipinfo)
