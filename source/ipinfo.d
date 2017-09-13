@@ -33,6 +33,17 @@ getIpinfo(delegate(IpinfoData data, Exception err) {
 		stdout.writefln("postal: %s", data.postal);
 	}
 });
+
+/*
+ip: 8.8.8.8
+latitude: 37.385999999999996
+longitude: -122.0838
+org: AS15169 Google Inc.
+city: Indio
+region: California
+country: US
+postal: 94043
+*/
 ----
 +/
 
