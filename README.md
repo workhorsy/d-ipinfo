@@ -8,13 +8,13 @@ Get http://ipinfo.io info with the D programming language
 # Generate documentation
 
 ```
-dmd -c -D source/ipinfo.d -Df=docs/1.0.0/index.html
+dub --build=docs
 ```
 
 # Run unit tests
 
 ```
-dub test --main-file=test/main.d
+dub test
 ```
 
 [![Dub version](https://img.shields.io/dub/v/d-ipinfo.svg)](https://code.dlang.org/packages/d-ipinfo)
