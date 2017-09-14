@@ -40,6 +40,26 @@ unittest {
 				data.postal.shouldEqual("94043");
 			});
 		}),
+		it("Should return an error when failing to parse json response", delegate() {
+			httpGet = delegate(string url, void delegate(int status, string response) cb) {
+				cb(200, "{");
+			};
+
+			ipinfo.getIpinfo(delegate(IpinfoData data, Exception err) {
+				err.shouldNotBeNull();
+				err.msg.shouldEqual(`Failed to parse "https://ipinfo.io/json" JSON response`);
+			});
+		}),
+		it("Should return an error when the server fails", delegate() {
+			httpGet = delegate(string url, void delegate(int status, string response) cb) {
+				cb(500, "");
+			};
+
+			ipinfo.getIpinfo(delegate(IpinfoData data, Exception err) {
+				err.shouldNotBeNull();
+				err.msg.shouldEqual(`Request for "https://ipinfo.io/json" failed with status code: 500`);
+			});
+		}),
 	);
 }
 
