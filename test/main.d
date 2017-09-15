@@ -7,7 +7,7 @@ unittest {
 
 	immutable string RESULT = `
 	{
-	  "ip": "8.8.8.8",
+	  "ip": "203.205.28.14",
 	  "loc": "37.385999999999996,-122.0838",
 	  "org": "AS15169 Google Inc.",
 	  "city": "Mountain View",
@@ -30,7 +30,7 @@ unittest {
 			ipinfo.getIpinfo(delegate(IpinfoData data, Exception err) {
 				err.shouldBeNull();
 
-				data.ip.shouldEqual("8.8.8.8");
+				data.ip.shouldEqual("203.205.28.14");
 				data.latitude.shouldEqual("37.385999999999996");
 				data.longitude.shouldEqual("-122.0838");
 				data.org.shouldEqual("AS15169 Google Inc.");
