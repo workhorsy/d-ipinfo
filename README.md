@@ -3,7 +3,7 @@ Get http://ipinfo.io info with the D programming language
 
 # Documentation
 
-[https://workhorsy.github.io/d-ipinfo/1.0.0/](https://workhorsy.github.io/d-ipinfo/1.0.0/)
+[https://workhorsy.github.io/d-ipinfo/1.1.0/](https://workhorsy.github.io/d-ipinfo/1.1.0/)
 
 # Generate documentation
 
