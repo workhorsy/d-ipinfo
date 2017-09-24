@@ -102,10 +102,8 @@ static this() {
 Returns the ipinfo info using a callback.
 
 Params:
- cb = The callback to fire when the ipinfo info has been downloaded.
-
-Throws:
-	If it fails to download or parse the JSON response.
+ cb = The callback to fire when the ipinfo has been downloaded. The callback
+	sends the IpinfoData data and an Exception if there was any problem.
 +/
 void getIpinfo(void delegate(IpinfoData data, Exception err) cb) {
 	import std.json : JSONValue, parseJSON;
