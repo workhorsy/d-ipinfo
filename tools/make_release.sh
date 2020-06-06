@@ -2,7 +2,7 @@
 # Stop and exit on error
 set -e
 
-VERSION="1.1.0"
+VERSION="2.0.0"
 
 
 # Change dir to this scripts directory
