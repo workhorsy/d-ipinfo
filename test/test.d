@@ -1,9 +1,9 @@
 
 
-import BDD;
 
 unittest {
 	import ipinfo;
+	import BDD;
 
 	immutable string RESULT = `
 	{
@@ -61,8 +61,4 @@ unittest {
 			});
 		}),
 	);
-}
-
-int main() {
-	return BDD.printResults();
 }
