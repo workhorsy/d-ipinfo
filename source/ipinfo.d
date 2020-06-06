@@ -9,7 +9,7 @@ Get http://ipinfo.io with the D programming language.
 Home page:
 $(LINK https://github.com/workhorsy/d-ipinfo)
 
-Version: 2.0.0
+Version: 3.0.0
 
 License:
 Boost Software License - Version 1.0
