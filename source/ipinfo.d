@@ -1,4 +1,4 @@
-// Copyright (c) 2017-2020 Matthew Brennan Jones <matthew.brennan.jones@gmail.com>
+// Copyright (c) 2017-2024 Matthew Brennan Jones <matthew.brennan.jones@gmail.com>
 // Boost Software License - Version 1.0
 // Get http://ipinfo.io info with the D programming language
 // https://github.com/workhorsy/d-ipinfo
@@ -9,7 +9,7 @@ Get http://ipinfo.io with the D programming language.
 Home page:
 $(LINK https://github.com/workhorsy/d-ipinfo)
 
-Version: 3.0.0
+Version: 4.0.0
 
 License:
 Boost Software License - Version 1.0
